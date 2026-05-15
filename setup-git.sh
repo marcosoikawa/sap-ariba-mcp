@@ -23,7 +23,7 @@ if [ ! -d .git ]; then
 - Servidor MCP (Ariba-MCP) com ferramentas para Event Management API v2
 - Agente de procurement (Ariba-Agent) com Agent Framework + Foundry
 - Devcontainer para desenvolvimento
-- Docker e docker-compose para deploy"
+- Deploy no Azure via Azure Developer CLI (azd)"
     echo "✅ Repositório inicializado com commit inicial"
 else
     echo "✅ Repositório Git já existe"

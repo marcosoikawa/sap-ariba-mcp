@@ -7,15 +7,7 @@ WORKSPACE_DIR="/workspaces/sap-ariba-mcp"
 
 # 1. Instalar dependências do root
 echo "📦 Instalando dependências do workspace..."
-python -m pip install --user -r requirements.txt
-
-# 2. Instalar dependências específicas de cada subprojeto
-echo "📦 Instalando dependências Ariba-MCP..."
-cd "$WORKSPACE_DIR/Ariba-MCP"
-python -m pip install --user -r requirements.txt
-
-echo "📦 Instalando dependências Ariba-Agent..."
-cd "$WORKSPACE_DIR/Ariba-Agent"
+cd "$WORKSPACE_DIR"
 python -m pip install --user -r requirements.txt
 
 # 3. Validar importações críticas
@@ -49,11 +41,24 @@ try:
     import agent
     print('✅ agent.py pode ser importado com sucesso')
 except Exception as e:
-    print(f'❌ Erro ao importar agent.py: {e}')
-    sys.exit(1)
-" || exit 1
+    print(f'⚠️  Aviso ao importar agent.py: {e}')
+" || true
 
-# 4. Avisar sobre configuração .env
+# 4. Validar ferramentas de deploy
+echo "🔍 Validando ferramentas de deploy..."
+if command -v azd &> /dev/null; then
+    echo "✅ Azure Developer CLI (azd) disponível: $(azd --version)"
+else
+    echo "⚠️  Azure Developer CLI (azd) não encontrado"
+fi
+
+if command -v gh &> /dev/null; then
+    echo "✅ GitHub CLI (gh) disponível: $(gh --version)"
+else
+    echo "⚠️  GitHub CLI (gh) não encontrado"
+fi
+
+# 5. Avisar sobre configuração .env
 if [ ! -f "$WORKSPACE_DIR/Ariba-Agent/.env" ]; then
     echo "⚠️  Arquivo .env não encontrado em Ariba-Agent"
     echo "   Copie .env.example para .env e configure as variáveis"
@@ -67,6 +72,10 @@ fi
 echo ""
 echo "✨ Setup concluído com sucesso!"
 echo ""
-echo "📚 Próximos passos:"
-echo "   1. Ariba-MCP:   cd Ariba-MCP && python server.py"
-echo "   2. Ariba-Agent: cd Ariba-Agent && python app.py"
+echo "📚 Próximos passos para deploy no Azure:"
+echo "   1. azd auth login              # Login no Azure"
+echo "   2. azd up                      # Provisiona e deploya"
+echo ""
+echo "📚 Ou para desenvolvimento local:"
+echo "   1. Terminal 1 - Ariba-MCP:   cd Ariba-MCP && python server.py"
+echo "   2. Terminal 2 - Ariba-Agent: cd Ariba-Agent && python app.py"

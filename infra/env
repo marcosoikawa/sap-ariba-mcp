@@ -1,0 +1,3 @@
+# Exemplo de variáveis de ambiente para azd
+AZURE_LOCATION=brazilsouth
+AZURE_ENV_NAME=ariba-mcp

@@ -1,9 +1,19 @@
 """
-Ariba-Agent - agente de procurement especializado em eventos do SAP Ariba.
+Ariba-Agent — exemplo didático de agente com Microsoft Agent Framework.
 
-Usa Microsoft Agent Framework + Microsoft Foundry Agents com
-autenticacao padrao (DefaultAzureCredential - `az login`).
-Consome o Ariba-MCP via Streamable HTTP.
+Fluxo em uma única função `run_query`:
+
+    1) Cria a ferramenta MCP (conecta no servidor Ariba-MCP).
+    2) Cria o client do modelo (Foundry / Azure AI).
+    3) Monta o `Agent` com instruções + ferramenta.
+    4) Roda a pergunta do usuário e devolve a resposta em texto.
+
+Pré-requisitos:
+    - `az login` (DefaultAzureCredential).
+    - Variáveis no .env:
+        ARIBA_MCP_URL                   (ex.: http://localhost:8000/mcp/)
+        AZURE_AI_PROJECT_ENDPOINT       (endpoint do projeto Foundry)
+        AZURE_AI_MODEL_DEPLOYMENT_NAME  (ex.: gpt-4o-mini)
 """
 
 from __future__ import annotations
@@ -15,71 +25,61 @@ from agent_framework import Agent, MCPStreamableHTTPTool, Message
 from agent_framework.foundry import FoundryChatClient
 
 
-SYSTEM_PROMPT = """Voce e o Ariba Procurement Copilot, um agente
-especialista em sourcing e gestao de eventos de cotacao no SAP Ariba.
+INSTRUCTIONS = """
+Você é o Ariba Procurement Copilot, um assistente de compras especialista
+em eventos de cotação no SAP Ariba (RFPs, RFIs e leilões reversos).
 
-Responsabilidades:
-- Auxiliar compradores a explorar eventos de RFP, RFI e leiloes reversos.
-- Buscar e resumir lances de fornecedores, datas de abertura/encerramento,
-  participantes, recusas e melhor proposta por item.
-- Sempre que possivel, use as ferramentas MCP conectadas ao Ariba para
-  obter dados frescos antes de responder. Nao invente eventIds, valores
-  ou nomes de fornecedores.
-- Apresente valores monetarios com a moeda do evento.
-- Quando o usuario pedir um resumo de um evento, prefira a ferramenta
-  event_summary.
-- Quando o usuario nao souber o eventId, comece por list_events.
-- Responda em portugues do Brasil, de forma objetiva, com bullets e
-  tabelas markdown quando ajudar.
+Como agir:
+- Sempre use as ferramentas MCP para buscar dados antes de responder.
+- Não invente eventIds, valores ou nomes de fornecedores.
+- Mostre valores com a moeda do evento.
+- Responda em português do Brasil, com bullets e tabelas quando ajudar.
 
-Ferramentas disponiveis (via MCP):
-- list_events(status?, limit?)
-- get_event(event_id)
-- list_participants(event_id)
-- list_bids(event_id)
-- event_summary(event_id)
+Ferramentas disponíveis (via MCP):
+- list_events(status?, limit?)        → lista eventos
+- get_event(event_id)                 → detalhe de um evento
+- list_participants(event_id)         → fornecedores do evento
+- list_bids(event_id)                 → lances dos fornecedores
+- event_summary(event_id)             → resumo + melhor lance por item
 """
 
 
-def build_mcp_tool() -> MCPStreamableHTTPTool:
-    url = os.getenv("ARIBA_MCP_URL", "http://localhost:8000/mcp/")
-    return MCPStreamableHTTPTool(
+async def run_query(
+    user_message: str,
+    history: list[dict] | None = None,
+) -> str:
+    """Envia uma pergunta ao agente e devolve a resposta em texto."""
+
+    # 1) Ferramenta MCP — conecta o agente ao servidor Ariba-MCP.
+    ferramenta_mcp = MCPStreamableHTTPTool(
         name="ariba-mcp",
-        url=url,
-        description="Acesso ao SAP Ariba Event Management via MCP.",
+        url=os.getenv("ARIBA_MCP_URL", "http://localhost:8000/mcp/"),
+        description="Acesso ao SAP Ariba Event Management.",
     )
 
-
-def build_agent_client() -> FoundryChatClient:
-    """Cria o client do Foundry usando DefaultAzureCredential."""
-    credential = DefaultAzureCredential()
-    return FoundryChatClient(
+    # 2) Client do modelo — fala com o LLM no Azure AI Foundry.
+    client = FoundryChatClient(
         project_endpoint=os.getenv("AZURE_AI_PROJECT_ENDPOINT"),
         model=os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME"),
-        credential=credential,
+        credential=DefaultAzureCredential(),  # usa `az login`
     )
 
-
-async def run_query(user_message: str, history: list[dict] | None = None) -> str:
-    """Executa uma rodada do agente e retorna a resposta como texto."""
-    mcp_tool = build_mcp_tool()
-    client = build_agent_client()
-
-    async with mcp_tool:
-        agent = Agent(
+    # 3) Abre a conexão MCP, monta o agente e roda a pergunta.
+    async with ferramenta_mcp:
+        agente = Agent(
             client=client,
             name="AribaProcurementCopilot",
-            instructions=SYSTEM_PROMPT,
-            tools=[mcp_tool],
+            instructions=INSTRUCTIONS,
+            tools=[ferramenta_mcp],
         )
 
-        messages: list[Message] = []
-        for turn in history or []:
-            role = turn.get("role")
-            content = turn.get("content", "")
-            if role and content:
-                messages.append(Message(role=role, contents=[content]))
-        messages.append(Message(role="user", contents=[user_message]))
+        # Histórico (dicts) + pergunta atual → lista de Message.
+        mensagens = [
+            Message(role=t["role"], contents=[t["content"]])
+            for t in (history or [])
+            if t.get("role") and t.get("content")
+        ]
+        mensagens.append(Message(role="user", contents=[user_message]))
 
-        result = await agent.run(messages)
-        return result.text
+        resposta = await agente.run(mensagens)
+        return resposta.text

@@ -12,7 +12,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
   - Autenticação via Azure DefaultAzureCredential (sem API key)
   - Suporte a histórico de chat
 - Devcontainer configurado para VS Code
-- Docker e docker-compose para fácil deployment
+- Deploy no Azure via Azure Developer CLI (azd)
 - Suporte a dados mock do Ariba para testes sem credenciais
 - Documentation completa em README.md
 
