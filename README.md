@@ -39,6 +39,10 @@ Solução completa para integração com SAP Ariba Event Management API v2, comp
 - [Python 3.12+](https://www.python.org/about/gettingstarted/)
 - [Docker](https://www.docker.com/get-started/) (opcional, para Dev Containers)
 
+> [!NOTE]
+> Este projeto esta configurado com `remoteBuild: true` no `azure.yaml` para os servicos de Container Apps.
+> Isso permite executar `azd up` sem Docker local, pois o build de imagem e feito remotamente no Azure Container Registry (ACR).
+
 ### Opções de Deployment
 
 Escolha uma das opções abaixo para preparar o ambiente. Em seguida, siga para a seção [Deploying](#deploying) para subir tudo no Azure.

@@ -9,10 +9,16 @@ services:
     project: ./Ariba-MCP
     language: python
     host: containerapp
+    docker:
+      path: Dockerfile
+      remoteBuild: true
   ariba-agent:
     project: ./Ariba-Agent
     language: python
     host: containerapp
+    docker:
+      path: Dockerfile
+      remoteBuild: true
 
 infra:
   provider: bicep
