@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.43.8.12551",
+      "templateHash": "5077940437458272056"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "environmentName": {
+      "type": "string"
+    },
+    "uniqueSuffix": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "sanitizedEnvName": "[toLower(replace(replace(replace(replace(parameters('environmentName'), ' ', ''), '--', ''), '[^a-zA-Z0-9-]', ''), '_', ''))]",
+    "userIdentityName": "[take(format('id-{0}-{1}', variables('sanitizedEnvName'), parameters('uniqueSuffix')), 32)]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2023-01-31",
+      "name": "[variables('userIdentityName')]",
+      "location": "[parameters('location')]"
+    }
+  ],
+  "outputs": {
+    "identityId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userIdentityName'))]"
+    },
+    "identityPrincipalId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userIdentityName')), '2023-01-31').principalId]"
+    },
+    "identityClientId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userIdentityName')), '2023-01-31').clientId]"
+    },
+    "identityName": {
+      "type": "string",
+      "value": "[variables('userIdentityName')]"
+    }
+  }
+}

@@ -28,6 +28,7 @@ mcp = FastMCP(
         "Use as ferramentas para listar eventos de sourcing, ver participantes, "
         "lances de fornecedores, datas e status de cotações."
     ),
+    stateless_http=True,
 )
 
 client = AribaClient()
@@ -112,5 +113,5 @@ async def health(_request):
 if __name__ == "__main__":
     host = os.getenv("HOST", "0.0.0.0")
     port = int(os.getenv("PORT", "8000"))
-    # Streamable HTTP transport → exposes URL at http://host:port/mcp/
-    mcp.run(transport="http", host=host, port=port)
+    # Streamable HTTP transport → exposes URL at http://host:port/mcp
+    mcp.run(transport="http", host=host, port=port, path="/mcp")

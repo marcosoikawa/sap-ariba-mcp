@@ -53,7 +53,7 @@ async def run_query(
     # 1) Ferramenta MCP — conecta o agente ao servidor Ariba-MCP.
     ferramenta_mcp = MCPStreamableHTTPTool(
         name="ariba-mcp",
-        url=os.getenv("ARIBA_MCP_URL", "http://localhost:8000/mcp/"),
+        url=os.getenv("ARIBA_MCP_URL", "http://localhost:8000/mcp"),
         description="Acesso ao SAP Ariba Event Management.",
     )
 

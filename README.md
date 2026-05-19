@@ -42,6 +42,9 @@ Solução completa para integração com SAP Ariba Event Management API v2, comp
 > [!NOTE]
 > Este projeto esta configurado com `remoteBuild: true` no `azure.yaml` para os servicos de Container Apps.
 > Isso permite executar `azd up` sem Docker local, pois o build de imagem e feito remotamente no Azure Container Registry (ACR).
+> Cada serviço usa seu próprio arquivo de dependências Python:
+> - `Ariba-Agent/requirements.txt`
+> - `Ariba-MCP/requirements.txt`
 
 ### Opções de Deployment
 
@@ -59,10 +62,16 @@ Você pode executar este projeto usando o **GitHub Codespaces**. O botão abaixo
    [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/SEU-REPO-AQUI)
 
 2. Aceite os valores padrão na página de criação do Codespaces.
-3. Aguarde o Devcontainer terminar o setup (instala automaticamente `requirements.txt` da raiz).
-4. Abra um terminal (caso ainda não esteja aberto).
-5. Faça login no Azure: `az login` e `azd auth login`.
-6. Continue com os [passos de deploy](#deploying).
+3. Aguarde o Devcontainer terminar o setup.
+4. Instale as dependências dos serviços:
+
+   ```bash
+   pip install -r Ariba-Agent/requirements.txt
+   pip install -r Ariba-MCP/requirements.txt
+   ```
+5. Abra um terminal (caso ainda não esteja aberto).
+6. Faça login no Azure: `az login` e `azd auth login`.
+7. Continue com os [passos de deploy](#deploying).
 
 </details>
 
@@ -79,10 +88,17 @@ Execute o projeto localmente em um Dev Container, usando o VS Code + Docker Desk
    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/SEU-REPO-AQUI)
 
    Ou, com o repositório já clonado, abra a pasta no VS Code e selecione **"Reopen in Container"**.
-3. Aguarde o Devcontainer subir e instalar as dependências (`requirements.txt` da raiz).
-4. Abra um terminal no VS Code.
-5. Faça login no Azure: `az login` e `azd auth login`.
-6. Continue com os [passos de deploy](#deploying).
+3. Aguarde o Devcontainer subir.
+4. Instale as dependências dos serviços:
+
+   ```bash
+   pip install -r Ariba-Agent/requirements.txt
+   pip install -r Ariba-MCP/requirements.txt
+   ```
+
+5. Abra um terminal no VS Code.
+6. Faça login no Azure: `az login` e `azd auth login`.
+7. Continue com os [passos de deploy](#deploying).
 
 </details>
 
@@ -110,15 +126,27 @@ Se preferir não usar Codespaces nem Dev Containers, você pode preparar o ambie
 
 3. Abra a pasta do projeto no terminal ou editor de sua preferência.
 
-4. Instale as dependências Python (uma única vez, na raiz):
+4. Instale as dependências Python dos serviços:
 
    ```bash
-   pip install -r requirements.txt
+   pip install -r Ariba-Agent/requirements.txt
+   pip install -r Ariba-MCP/requirements.txt
    ```
 
 5. Continue com os [passos de deploy](#deploying).
 
 </details>
+
+### Validação da Infraestrutura
+
+Antes de fazer deploy, você pode validar que a infraestrutura Bicep está sintaticamente correta:
+
+```bash
+cd infra/
+bicep build main.bicep
+```
+
+Se o comando for bem-sucedido, um arquivo `main.json` será gerado (Template ARM compilada).
 
 ### Deploying
 
