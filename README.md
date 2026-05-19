@@ -120,10 +120,21 @@ Se preferir não usar Codespaces nem Dev Containers, você pode preparar o ambie
 
 Uma vez aberto o projeto no [Codespaces](#github-codespaces), no [Dev Containers](#vs-code-dev-containers) ou [localmente](#ambiente-local), você pode implantar o ambiente no Azure seguindo os passos abaixo:
 
-1. **Login no Azure:**
+> [!IMPORTANT]
+> Execute os comandos `azd` a partir da raiz do repositório, onde está o arquivo `azure.yaml`.
+
+1. **Login no Azure e no Azure Developer CLI:**
 
    ```bash
+   az login
+   az account show
    azd auth login
+   ```
+
+   Se você tiver múltiplas subscriptions, selecione a desejada antes do deploy:
+
+   ```bash
+   az account set --subscription "<subscription-id-ou-nome>"
    ```
 
 2. **Provisione e implante todos os recursos:**

@@ -1,19 +1,19 @@
 # azure.yaml
-# Definição do projeto para Azure Developer CLI (azd)
+# Definicao do projeto para Azure Developer CLI (azd)
 
 name: sap-ariba-mcp
 metadata:
   template: custom
 services:
   ariba-mcp:
-    project: ../Ariba-MCP
+    project: ./Ariba-MCP
     language: python
     host: containerapp
   ariba-agent:
-    project: ../Ariba-Agent
+    project: ./Ariba-Agent
     language: python
     host: containerapp
 
 infra:
   provider: bicep
-  path: ./main.bicep
+  path: ./infra
