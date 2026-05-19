@@ -5,7 +5,9 @@
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/SEU-REPO-AQUI)
 
 <div align="center">
-  [**Features**](#features) | [**Getting Started**](#getting-started) | [**Testing the Agent**](#testing-the-agent) | [**Guidance**](#guidance) | [**Resources**](#resources)
+  
+[**Features**](#features) \| [**Getting Started**](#getting-started) \| [**Deploying**](#deploying) \| [**Testing the Agent**](#testing-the-agent) \| [**Guidance**](#guidance) \| [**Resources**](#resources) \| [**Licença**](#licença)
+
 </div>
 
 ---
