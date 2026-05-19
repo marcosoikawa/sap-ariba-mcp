@@ -203,14 +203,37 @@ module agentApp './modules/containerapp.bicep' = {
   }
 }
 
-// ====== Role assignment: UAMI -> Azure AI Foundry (Azure AI Developer) ======
+// ====== Role assignment: UAMI -> Azure AI Foundry ======
 // Sempre concede acesso ao Foundry provisionado por este template.
+// Azure AI User -> data actions de agents/* (necessário para POST /api/projects/{name}/openai/*)
 module foundryRoleProvisioned './modules/foundryRole.bicep' = {
   name: 'foundry-role-provisioned'
   scope: rg
   params: {
     aiFoundryAccountName: foundry.outputs.accountName
     principalId: appIdentity.outputs.principalId
+  }
+}
+
+// Cognitive Services User -> chamadas diretas ao endpoint OpenAI/CognitiveServices
+module foundryRoleCogServices './modules/foundryRole.bicep' = {
+  name: 'foundry-role-cogservices'
+  scope: rg
+  params: {
+    aiFoundryAccountName: foundry.outputs.accountName
+    principalId: appIdentity.outputs.principalId
+    roleDefinitionId: 'a97b65f3-24c7-4388-baec-2e87135dc908'
+  }
+}
+
+// Cognitive Services OpenAI User -> permite POST /openai/deployments/{name}/chat/completions
+module foundryRoleOpenAIUser './modules/foundryRole.bicep' = {
+  name: 'foundry-role-openai-user'
+  scope: rg
+  params: {
+    aiFoundryAccountName: foundry.outputs.accountName
+    principalId: appIdentity.outputs.principalId
+    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'
   }
 }
 

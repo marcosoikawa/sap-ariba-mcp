@@ -5,8 +5,8 @@
 param aiFoundryAccountName string
 param principalId string
 
-@description('Role definition ID. Default: Azure AI Developer (64702f94-c441-49e6-a78b-ef80e0188fee).')
-param roleDefinitionId string = '64702f94-c441-49e6-a78b-ef80e0188fee'
+@description('Role definition ID. Default: Azure AI User (53ca6127-db72-4b80-b1b0-d745d6d5456d) — inclui data actions de agents/write necessárias para chamar Foundry OpenAI via projeto.')
+param roleDefinitionId string = '53ca6127-db72-4b80-b1b0-d745d6d5456d'
 
 resource foundry 'Microsoft.CognitiveServices/accounts@2024-10-01' existing = {
   name: aiFoundryAccountName
