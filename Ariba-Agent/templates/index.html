@@ -202,12 +202,28 @@
       font-weight: 600;
     }
 
-    .msg table { border-collapse: collapse; margin: 8px 0; }
-    .msg th, .msg td {
-      border: 1px solid #d0dae8;
-      padding: 4px 8px;
+    .msg .table-wrap {
+      overflow-x: auto;
+      margin: 8px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .msg table {
+      border-collapse: collapse;
+      margin: 0;
+      width: 100%;
+      table-layout: auto;
       font-size: 13px;
     }
+    .msg th, .msg td {
+      border: 1px solid #d0dae8;
+      padding: 6px 8px;
+      font-size: 13px;
+      vertical-align: top;
+      word-break: normal;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+    .msg th { background: #f1f5fb; text-align: left; }
 
     .msg code {
       background: #edf2fa;
@@ -338,7 +354,7 @@
   <div class="app-shell">
     <header class="topbar">
       <div class="brand">
-        <h1>Microsoft 365 Agents Playground</h1>
+        <h1>Microsoft Mock Interface</h1>
       </div>
       <div class="top-actions">
         <button class="ghost-btn" type="button">Mock an Activity</button>
@@ -442,11 +458,22 @@ function log(message, level = 'info') {
   logs.prepend(d);
 }
 
+function wrapTables(container) {
+  container.querySelectorAll('table').forEach((t) => {
+    if (t.parentElement && t.parentElement.classList.contains('table-wrap')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'table-wrap';
+    t.parentNode.insertBefore(wrap, t);
+    wrap.appendChild(t);
+  });
+}
+
 function add(role, html) {
   const d = document.createElement('div');
   d.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
   d.innerHTML = `<div class="role">${role}</div>` + html;
   chat.appendChild(d);
+  wrapTables(d);
   chatWindow.scrollTop = chatWindow.scrollHeight;
   return d;
 }
@@ -477,6 +504,7 @@ f.addEventListener('submit', async (e) => {
       log('Agent retornou erro: ' + j.error, 'error');
     } else {
       placeholder.innerHTML = `<div class="role">assistant</div>` + marked.parse(j.reply || '');
+      wrapTables(placeholder);
       log('Agent respondeu com sucesso.', 'success');
     }
   } catch (err) {

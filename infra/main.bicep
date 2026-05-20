@@ -1,8 +1,11 @@
 // main.bicep
 // Infraestrutura para SAP Ariba MCP & Agent
 // Deploy: Container Apps (ariba-mcp + ariba-agent) + Container Registry + Log Analytics
+//
+// O Resource Group de destino é fornecido pelo usuário (via `azd env set AZURE_RESOURCE_GROUP <nome>`
+// ou via prompt do `azd up`). Este template NÃO cria o resource group.
 
-targetScope = 'subscription'
+targetScope = 'resourceGroup'
 
 @minLength(1)
 @maxLength(64)
@@ -60,13 +63,10 @@ param aribaClientSecret string = ''
 @description('SAP Ariba Realm (opcional, ignorado em modo mock).')
 param aribaRealm string = ''
 
-var abbrs = loadJsonContent('./abbreviations.json')
-
-var uniqueSuffix = substring(uniqueString(subscription().id, environmentName), 0, 5)
+var uniqueSuffix = substring(uniqueString(resourceGroup().id, environmentName), 0, 5)
 var tags = {
   'azd-env-name': environmentName
 }
-var rgName = '${abbrs.resourcesResourceGroups}${environmentName}-${uniqueSuffix}'
 var sanitizedEnvName = toLower(replace(replace(replace(replace(environmentName, ' ', '-'), '--', '-'), '[^a-zA-Z0-9-]', ''), '_', '-'))
 
 var mcpAppName = take('ca-mcp-${sanitizedEnvName}-${uniqueSuffix}', 32)
@@ -74,17 +74,9 @@ var agentAppName = take('ca-agent-${sanitizedEnvName}-${uniqueSuffix}', 32)
 var foundryAccountName = take('aif-${sanitizedEnvName}-${uniqueSuffix}', 24)
 var foundryProjectName = take('aip-${sanitizedEnvName}-${uniqueSuffix}', 24)
 
-// ====== Resource Group ======
-resource rg 'Microsoft.Resources/resourceGroups@2024-11-01' = {
-  name: rgName
-  location: location
-  tags: tags
-}
-
 // ====== User Assigned Identity ======
 module appIdentity './modules/identity.bicep' = {
   name: 'uami'
-  scope: rg
   params: {
     location: location
     environmentName: environmentName
@@ -95,7 +87,6 @@ module appIdentity './modules/identity.bicep' = {
 // ====== Log Analytics Workspace ======
 module monitoring './modules/monitoring.bicep' = {
   name: 'monitoring'
-  scope: rg
   params: {
     location: location
     environmentName: environmentName
@@ -107,7 +98,6 @@ module monitoring './modules/monitoring.bicep' = {
 // ====== Container Registry ======
 module containerRegistry './modules/containerregistry.bicep' = {
   name: 'registry'
-  scope: rg
   params: {
     location: location
     environmentName: environmentName
@@ -120,7 +110,6 @@ module containerRegistry './modules/containerregistry.bicep' = {
 // ====== Container Apps Managed Environment (compartilhado) ======
 module containerAppEnv './modules/containerappenv.bicep' = {
   name: 'cae'
-  scope: rg
   params: {
     location: location
     environmentName: environmentName
@@ -133,7 +122,6 @@ module containerAppEnv './modules/containerappenv.bicep' = {
 // ====== Azure AI Foundry (account + project + model deployment) ======
 module foundry './modules/foundry.bicep' = {
   name: 'foundry'
-  scope: rg
   params: {
     location: location
     tags: tags
@@ -153,7 +141,6 @@ var effectiveDeploymentName = empty(aiModelDeploymentName) ? foundry.outputs.dep
 // ====== Container App: Ariba-MCP ======
 module mcpApp './modules/containerapp.bicep' = {
   name: 'ca-ariba-mcp'
-  scope: rg
   params: {
     location: location
     tags: tags
@@ -182,7 +169,6 @@ module mcpApp './modules/containerapp.bicep' = {
 // ====== Container App: Ariba-Agent ======
 module agentApp './modules/containerapp.bicep' = {
   name: 'ca-ariba-agent'
-  scope: rg
   params: {
     location: location
     tags: tags
@@ -208,7 +194,6 @@ module agentApp './modules/containerapp.bicep' = {
 // Azure AI User -> data actions de agents/* (necessário para POST /api/projects/{name}/openai/*)
 module foundryRoleProvisioned './modules/foundryRole.bicep' = {
   name: 'foundry-role-provisioned'
-  scope: rg
   params: {
     aiFoundryAccountName: foundry.outputs.accountName
     principalId: appIdentity.outputs.principalId
@@ -218,7 +203,6 @@ module foundryRoleProvisioned './modules/foundryRole.bicep' = {
 // Cognitive Services User -> chamadas diretas ao endpoint OpenAI/CognitiveServices
 module foundryRoleCogServices './modules/foundryRole.bicep' = {
   name: 'foundry-role-cogservices'
-  scope: rg
   params: {
     aiFoundryAccountName: foundry.outputs.accountName
     principalId: appIdentity.outputs.principalId
@@ -229,7 +213,6 @@ module foundryRoleCogServices './modules/foundryRole.bicep' = {
 // Cognitive Services OpenAI User -> permite POST /openai/deployments/{name}/chat/completions
 module foundryRoleOpenAIUser './modules/foundryRole.bicep' = {
   name: 'foundry-role-openai-user'
-  scope: rg
   params: {
     aiFoundryAccountName: foundry.outputs.accountName
     principalId: appIdentity.outputs.principalId
@@ -250,7 +233,7 @@ module foundryRole './modules/foundryRole.bicep' = if (!empty(aiFoundryAccountNa
 // ====== OUTPUTS ======
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
-output AZURE_RESOURCE_GROUP string = rg.name
+output AZURE_RESOURCE_GROUP string = resourceGroup().name
 output AZURE_SUBSCRIPTION_ID string = subscription().subscriptionId
 
 output AZURE_USER_ASSIGNED_IDENTITY_ID string = appIdentity.outputs.identityId
