@@ -6,7 +6,7 @@ import os
 from dataclasses import dataclass
 
 from agent_framework import ChatAgent, MCPStreamableHTTPTool
-from agent_framework.azure import AzureAIAgentClient
+from agent_framework.foundry import AzureAIAgentClient
 from azure.identity.aio import DefaultAzureCredential
 
 INSTRUCTIONS = """

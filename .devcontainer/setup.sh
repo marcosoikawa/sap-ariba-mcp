@@ -29,7 +29,7 @@ try:
     print("✅ ChatAgent disponível")
     print("✅ MCPStreamableHTTPTool disponível")
 
-    from agent_framework.azure import AzureAIAgentClient
+    from agent_framework.foundry import AzureAIAgentClient
     print("✅ AzureAIAgentClient (Persistent Agents) disponível")
 
     from azure.monitor.opentelemetry import configure_azure_monitor  # noqa: F401
