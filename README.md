@@ -6,7 +6,7 @@
 
 <div align="center">
   
-[**Features**](#features) \| [**Getting Started**](#getting-started) \| [**Deploying**](#deploying) \| [**Testing the Agent**](#testing-the-agent) \| [**Guidance**](#guidance) \| [**Resources**](#resources) \| [**Licença**](#licença)
+[**Features**](#features) \| [**Quick Start**](#quick-start-dev-container-local) \| [**Getting Started**](#getting-started) \| [**Deploying**](#deploying) \| [**Testing the Agent**](#testing-the-agent) \| [**Guidance**](#guidance) \| [**Resources**](#resources) \| [**Licença**](#licença)
 
 </div>
 
@@ -27,6 +27,48 @@ Solução completa para integração com SAP Ariba Event Management API v2, comp
 - Resumo de eventos e melhores lances.
 - Modo mock para testes sem credenciais SAP.
 - Pronto para produção em Azure Container Apps.
+
+---
+
+## Quick Start (Dev Container local)
+
+Subida rápida do ambiente usando o **Dev Container local** (VS Code + Docker Desktop + extensão [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)). Pré-requisito: um **Resource Group já existente** na sua subscription Azure.
+
+1. Clone o repositório, abra a pasta no VS Code e selecione **"Reopen in Container"**. Aguarde o Dev Container subir.
+
+2. Abra um terminal dentro do Dev Container e faça login no Azure:
+
+   ```bash
+   az login
+   azd auth login
+   ```
+
+3. (Opcional) Selecione a subscription desejada:
+
+   ```bash
+   az account set --subscription "<SUBSCRIPTION_ID_OU_NOME>"
+   ```
+
+4. Crie um ambiente `azd` e defina o **Resource Group existente** + região:
+
+   ```bash
+   azd env new <NOME_DO_AMBIENTE>
+   azd env set AZURE_RESOURCE_GROUP "<NOME_DO_RG_EXISTENTE>"
+   azd env set AZURE_LOCATION "eastus2"
+   ```
+
+   > Se o Resource Group ainda não existir, crie antes com:
+   > ```bash
+   > az group create -n "<NOME_DO_RG_EXISTENTE>" -l "eastus2"
+   > ```
+
+5. Faça o provisionamento e deploy de tudo (infra + containers):
+
+   ```bash
+   azd up
+   ```
+
+   Ao final, os endpoints do `ariba-mcp` e do `ariba-agent` serão exibidos no output.
 
 ---
 
