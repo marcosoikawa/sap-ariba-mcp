@@ -1,11 +1,11 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "metadata": {
     "_generator": {
       "name": "bicep",
       "version": "0.43.8.12551",
-      "templateHash": "8781476207166289153"
+      "templateHash": "15476423591125929283"
     }
   },
   "parameters": {
@@ -54,7 +54,7 @@
     },
     "foundryModelVersion": {
       "type": "string",
-      "defaultValue": "1",
+      "defaultValue": "2026-03-05",
       "metadata": {
         "description": "Versão do modelo a ser deployado no Foundry provisionado."
       }
@@ -124,148 +124,10 @@
     }
   },
   "variables": {
-    "$fxv#0": {
-      "analysisServicesServers": "as",
-      "apiManagementService": "apim-",
-      "appConfigurationStores": "appcs-",
-      "appManagedEnvironments": "cae-",
-      "appContainerApps": "ca-",
-      "authorizationPolicyDefinitions": "policy-",
-      "automationAutomationAccounts": "aa-",
-      "blueprintBlueprints": "bp-",
-      "blueprintBlueprintsArtifacts": "bpa-",
-      "cacheRedis": "redis-",
-      "cdnProfiles": "cdnp-",
-      "cdnProfilesEndpoints": "cdne-",
-      "cognitiveServicesAccounts": "cog-",
-      "cognitiveServicesFormRecognizer": "cog-fr-",
-      "cognitiveServicesTextAnalytics": "cog-ta-",
-      "computeAvailabilitySets": "avail-",
-      "computeCloudServices": "cld-",
-      "computeDiskEncryptionSets": "des",
-      "computeDisks": "disk",
-      "computeDisksOs": "osdisk",
-      "computeGalleries": "gal",
-      "computeSnapshots": "snap-",
-      "computeVirtualMachines": "vm",
-      "computeVirtualMachineScaleSets": "vmss-",
-      "containerInstanceContainerGroups": "ci",
-      "containerRegistryRegistries": "cr",
-      "containerServiceManagedClusters": "aks-",
-      "databricksWorkspaces": "dbw-",
-      "dataFactoryFactories": "adf-",
-      "dataLakeAnalyticsAccounts": "dla",
-      "dataLakeStoreAccounts": "dls",
-      "dataMigrationServices": "dms-",
-      "dBforMySQLServers": "mysql-",
-      "dBforPostgreSQLServers": "psql-",
-      "devicesIotHubs": "iot-",
-      "devicesProvisioningServices": "provs-",
-      "devicesProvisioningServicesCertificates": "pcert-",
-      "documentDBDatabaseAccounts": "cosmos-",
-      "eventGridDomains": "evgd-",
-      "eventGridDomainsTopics": "evgt-",
-      "eventGridEventSubscriptions": "evgs-",
-      "eventHubNamespaces": "evhns-",
-      "eventHubNamespacesEventHubs": "evh-",
-      "hdInsightClustersHadoop": "hadoop-",
-      "hdInsightClustersHbase": "hbase-",
-      "hdInsightClustersKafka": "kafka-",
-      "hdInsightClustersMl": "mls-",
-      "hdInsightClustersSpark": "spark-",
-      "hdInsightClustersStorm": "storm-",
-      "hybridComputeMachines": "arcs-",
-      "insightsActionGroups": "ag-",
-      "insightsComponents": "appi-",
-      "keyVaultVaults": "kv-",
-      "kubernetesConnectedClusters": "arck",
-      "kustoClusters": "dec",
-      "kustoClustersDatabases": "dedb",
-      "loadTesting": "lt-",
-      "logicIntegrationAccounts": "ia-",
-      "logicWorkflows": "logic-",
-      "machineLearningServicesWorkspaces": "mlw-",
-      "managedIdentityUserAssignedIdentities": "id-",
-      "managementManagementGroups": "mg-",
-      "migrateAssessmentProjects": "migr-",
-      "networkApplicationGateways": "agw-",
-      "networkApplicationSecurityGroups": "asg-",
-      "networkAzureFirewalls": "afw-",
-      "networkBastionHosts": "bas-",
-      "networkConnections": "con-",
-      "networkDnsZones": "dnsz-",
-      "networkExpressRouteCircuits": "erc-",
-      "networkFirewallPolicies": "afwp-",
-      "networkFirewallPoliciesWebApplication": "waf",
-      "networkFirewallPoliciesRuleGroups": "wafrg",
-      "networkFrontDoors": "fd-",
-      "networkFrontdoorWebApplicationFirewallPolicies": "fdfp-",
-      "networkLoadBalancersExternal": "lbe-",
-      "networkLoadBalancersInternal": "lbi-",
-      "networkLoadBalancersInboundNatRules": "rule-",
-      "networkLocalNetworkGateways": "lgw-",
-      "networkNatGateways": "ng-",
-      "networkNetworkInterfaces": "nic-",
-      "networkNetworkSecurityGroups": "nsg-",
-      "networkNetworkSecurityGroupsSecurityRules": "nsgsr-",
-      "networkNetworkWatchers": "nw-",
-      "networkPrivateDnsZones": "pdnsz-",
-      "networkPrivateLinkServices": "pl-",
-      "networkPublicIPAddresses": "pip-",
-      "networkPublicIPPrefixes": "ippre-",
-      "networkRouteFilters": "rf-",
-      "networkRouteTables": "rt-",
-      "networkRouteTablesRoutes": "udr-",
-      "networkTrafficManagerProfiles": "traf-",
-      "networkVirtualNetworkGateways": "vgw-",
-      "networkVirtualNetworks": "vnet-",
-      "networkVirtualNetworksSubnets": "snet-",
-      "networkVirtualNetworksVirtualNetworkPeerings": "peer-",
-      "networkVirtualWans": "vwan-",
-      "networkVpnGateways": "vpng-",
-      "networkVpnGatewaysVpnConnections": "vcn-",
-      "networkVpnGatewaysVpnSites": "vst-",
-      "notificationHubsNamespaces": "ntfns-",
-      "notificationHubsNamespacesNotificationHubs": "ntf-",
-      "operationalInsightsWorkspaces": "log-",
-      "portalDashboards": "dash-",
-      "powerBIDedicatedCapacities": "pbi-",
-      "purviewAccounts": "pview-",
-      "recoveryServicesVaults": "rsv-",
-      "resourcesResourceGroups": "rg-",
-      "searchSearchServices": "srch-",
-      "serviceBusNamespaces": "sb-",
-      "serviceBusNamespacesQueues": "sbq-",
-      "serviceBusNamespacesTopics": "sbt-",
-      "serviceEndPointPolicies": "se-",
-      "serviceFabricClusters": "sf-",
-      "signalRServiceSignalR": "sigr",
-      "sqlManagedInstances": "sqlmi-",
-      "sqlServers": "sql-",
-      "sqlServersDataWarehouse": "sqldw-",
-      "sqlServersDatabases": "sqldb-",
-      "sqlServersDatabasesStretch": "sqlstrdb-",
-      "storageStorageAccounts": "st",
-      "storageStorageAccountsVm": "stvm",
-      "storSimpleManagers": "ssimp",
-      "streamAnalyticsCluster": "asa-",
-      "synapseWorkspaces": "syn",
-      "synapseWorkspacesAnalyticsWorkspaces": "synw",
-      "synapseWorkspacesSqlPoolsDedicated": "syndp",
-      "synapseWorkspacesSqlPoolsSpark": "synsp",
-      "timeSeriesInsightsEnvironments": "tsi-",
-      "webServerFarms": "plan-",
-      "webSitesAppService": "app-",
-      "webSitesAppServiceEnvironment": "ase-",
-      "webSitesFunctions": "func-",
-      "webStaticSites": "stapp-"
-    },
-    "abbrs": "[variables('$fxv#0')]",
-    "uniqueSuffix": "[substring(uniqueString(subscription().id, parameters('environmentName')), 0, 5)]",
+    "uniqueSuffix": "[substring(uniqueString(resourceGroup().id, parameters('environmentName')), 0, 5)]",
     "tags": {
       "azd-env-name": "[parameters('environmentName')]"
     },
-    "rgName": "[format('{0}{1}-{2}', variables('abbrs').resourcesResourceGroups, parameters('environmentName'), variables('uniqueSuffix'))]",
     "sanitizedEnvName": "[toLower(replace(replace(replace(replace(parameters('environmentName'), ' ', '-'), '--', '-'), '[^a-zA-Z0-9-]', ''), '_', '-'))]",
     "mcpAppName": "[take(format('ca-mcp-{0}-{1}', variables('sanitizedEnvName'), variables('uniqueSuffix')), 32)]",
     "agentAppName": "[take(format('ca-agent-{0}-{1}', variables('sanitizedEnvName'), variables('uniqueSuffix')), 32)]",
@@ -274,17 +136,9 @@
   },
   "resources": [
     {
-      "type": "Microsoft.Resources/resourceGroups",
-      "apiVersion": "2024-11-01",
-      "name": "[variables('rgName')]",
-      "location": "[parameters('location')]",
-      "tags": "[variables('tags')]"
-    },
-    {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "uami",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -353,16 +207,12 @@
             }
           }
         }
-      },
-      "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
-      ]
+      }
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "monitoring",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -389,7 +239,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.43.8.12551",
-              "templateHash": "230734725530216452"
+              "templateHash": "5635760507496625172"
             }
           },
           "parameters": {
@@ -546,7 +396,8 @@
             },
             "abbrs": "[variables('$fxv#0')]",
             "sanitizedEnvName": "[toLower(replace(replace(replace(replace(parameters('environmentName'), ' ', '-'), '--', '-'), '[^a-zA-Z0-9-]', ''), '_', '-'))]",
-            "logAnalyticsName": "[take(format('{0}{1}-{2}', variables('abbrs').operationalInsightsWorkspaces, variables('sanitizedEnvName'), parameters('uniqueSuffix')), 63)]"
+            "logAnalyticsName": "[take(format('{0}{1}-{2}', variables('abbrs').operationalInsightsWorkspaces, variables('sanitizedEnvName'), parameters('uniqueSuffix')), 63)]",
+            "appInsightsName": "[take(format('{0}{1}-{2}', variables('abbrs').insightsComponents, variables('sanitizedEnvName'), parameters('uniqueSuffix')), 260)]"
           },
           "resources": [
             {
@@ -561,6 +412,24 @@
                 },
                 "retentionInDays": 30
               }
+            },
+            {
+              "type": "Microsoft.Insights/components",
+              "apiVersion": "2020-02-02",
+              "name": "[variables('appInsightsName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "kind": "web",
+              "properties": {
+                "Application_Type": "web",
+                "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsName'))]",
+                "IngestionMode": "LogAnalytics",
+                "publicNetworkAccessForIngestion": "Enabled",
+                "publicNetworkAccessForQuery": "Enabled"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsName'))]"
+              ]
             }
           ],
           "outputs": {
@@ -575,19 +444,31 @@
             "customerId": {
               "type": "string",
               "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsName')), '2022-10-01').customerId]"
+            },
+            "appInsightsName": {
+              "type": "string",
+              "value": "[variables('appInsightsName')]"
+            },
+            "appInsightsId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+            },
+            "appInsightsConnectionString": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2020-02-02').ConnectionString]"
+            },
+            "appInsightsInstrumentationKey": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2020-02-02').InstrumentationKey]"
             }
           }
         }
-      },
-      "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
-      ]
+      }
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "registry",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -604,7 +485,7 @@
             "value": "[variables('uniqueSuffix')]"
           },
           "identityName": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.name.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.name.value]"
           },
           "tags": {
             "value": "[variables('tags')]"
@@ -723,15 +604,13 @@
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami')]",
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'uami')]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "cae",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -751,7 +630,7 @@
             "value": "[variables('tags')]"
           },
           "logAnalyticsWorkspaceName": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.workspaceName.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.workspaceName.value]"
           }
         },
         "template": {
@@ -816,15 +695,13 @@
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'monitoring')]",
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'monitoring')]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "foundry",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -857,6 +734,12 @@
           },
           "modelCapacity": {
             "value": "[parameters('foundryModelCapacity')]"
+          },
+          "appInsightsId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.appInsightsId.value]"
+          },
+          "appInsightsConnectionString": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.appInsightsConnectionString.value]"
           }
         },
         "template": {
@@ -866,7 +749,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.43.8.12551",
-              "templateHash": "16396974117151557957"
+              "templateHash": "1266112654053636574"
             }
           },
           "parameters": {
@@ -914,6 +797,20 @@
               "defaultValue": 10,
               "metadata": {
                 "description": "Capacity (kTPM) do deployment."
+              }
+            },
+            "appInsightsId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Resource ID do Application Insights a conectar ao project (vazio = não cria connection)."
+              }
+            },
+            "appInsightsConnectionString": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Connection string do Application Insights (vazio = não cria connection)."
               }
             }
           },
@@ -970,6 +867,28 @@
               "dependsOn": [
                 "[resourceId('Microsoft.CognitiveServices/accounts', parameters('foundryAccountName'))]"
               ]
+            },
+            {
+              "condition": "[and(not(empty(parameters('appInsightsId'))), not(empty(parameters('appInsightsConnectionString'))))]",
+              "type": "Microsoft.CognitiveServices/accounts/projects/connections",
+              "apiVersion": "2025-04-01-preview",
+              "name": "[format('{0}/{1}/{2}', parameters('foundryAccountName'), parameters('foundryProjectName'), 'appinsights')]",
+              "properties": {
+                "category": "AppInsights",
+                "target": "[parameters('appInsightsId')]",
+                "authType": "ApiKey",
+                "isSharedToAll": true,
+                "credentials": {
+                  "key": "[parameters('appInsightsConnectionString')]"
+                },
+                "metadata": {
+                  "ApiType": "Azure",
+                  "ResourceId": "[parameters('appInsightsId')]"
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts/projects', parameters('foundryAccountName'), parameters('foundryProjectName'))]"
+              ]
             }
           ],
           "outputs": {
@@ -993,14 +912,13 @@
         }
       },
       "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'monitoring')]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "ca-ariba-mcp",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -1014,13 +932,13 @@
             "value": "[variables('tags')]"
           },
           "identityId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.identityId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.identityId.value]"
           },
           "containerRegistryName": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'registry'), '2025-04-01').outputs.name.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'registry'), '2025-04-01').outputs.name.value]"
           },
           "containerAppEnvId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'cae'), '2025-04-01').outputs.id.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'cae'), '2025-04-01').outputs.id.value]"
           },
           "serviceName": {
             "value": "ariba-mcp"
@@ -1033,7 +951,7 @@
           },
           "secrets": "[if(empty(parameters('aribaClientSecret')), createObject('value', createObject()), createObject('value', createObject('ariba-client-secret', parameters('aribaClientSecret'))))]",
           "envVars": {
-            "value": "[union(createArray(createObject('name', 'HOST', 'value', '0.0.0.0'), createObject('name', 'ARIBA_USE_MOCK', 'value', parameters('aribaUseMock')), createObject('name', 'ARIBA_APP_ID', 'value', parameters('aribaAppId')), createObject('name', 'ARIBA_CLIENT_ID', 'value', parameters('aribaClientId')), createObject('name', 'ARIBA_REALM', 'value', parameters('aribaRealm')), createObject('name', 'AZURE_CLIENT_ID', 'value', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.clientId.value)), if(empty(parameters('aribaClientSecret')), createArray(), createArray(createObject('name', 'ARIBA_CLIENT_SECRET', 'secretRef', 'ariba-client-secret'))))]"
+            "value": "[union(createArray(createObject('name', 'HOST', 'value', '0.0.0.0'), createObject('name', 'ARIBA_USE_MOCK', 'value', parameters('aribaUseMock')), createObject('name', 'ARIBA_APP_ID', 'value', parameters('aribaAppId')), createObject('name', 'ARIBA_CLIENT_ID', 'value', parameters('aribaClientId')), createObject('name', 'ARIBA_REALM', 'value', parameters('aribaRealm')), createObject('name', 'AZURE_CLIENT_ID', 'value', reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.clientId.value), createObject('name', 'APPLICATIONINSIGHTS_CONNECTION_STRING', 'value', reference(resourceId('Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.appInsightsConnectionString.value), createObject('name', 'OTEL_SERVICE_NAME', 'value', 'ariba-mcp')), if(empty(parameters('aribaClientSecret')), createArray(), createArray(createObject('name', 'ARIBA_CLIENT_SECRET', 'secretRef', 'ariba-client-secret'))))]"
           }
         },
         "template": {
@@ -1191,17 +1109,16 @@
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'cae')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'registry')]",
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'uami')]",
+        "[resourceId('Microsoft.Resources/deployments', 'cae')]",
+        "[resourceId('Microsoft.Resources/deployments', 'registry')]",
+        "[resourceId('Microsoft.Resources/deployments', 'monitoring')]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "ca-ariba-agent",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -1215,13 +1132,13 @@
             "value": "[variables('tags')]"
           },
           "identityId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.identityId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.identityId.value]"
           },
           "containerRegistryName": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'registry'), '2025-04-01').outputs.name.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'registry'), '2025-04-01').outputs.name.value]"
           },
           "containerAppEnvId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'cae'), '2025-04-01').outputs.id.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'cae'), '2025-04-01').outputs.id.value]"
           },
           "serviceName": {
             "value": "ariba-agent"
@@ -1240,23 +1157,35 @@
               },
               {
                 "name": "ARIBA_MCP_URL",
-                "value": "[format('https://{0}/mcp/', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'ca-ariba-mcp'), '2025-04-01').outputs.containerAppFqdn.value)]"
+                "value": "[format('https://{0}/mcp', reference(resourceId('Microsoft.Resources/deployments', 'ca-ariba-mcp'), '2025-04-01').outputs.containerAppFqdn.value)]"
               },
               {
                 "name": "AZURE_AI_PROJECT_ENDPOINT",
-                "value": "[if(empty(parameters('aiProjectEndpoint')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectEndpoint.value, parameters('aiProjectEndpoint'))]"
+                "value": "[if(empty(parameters('aiProjectEndpoint')), reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectEndpoint.value, parameters('aiProjectEndpoint'))]"
               },
               {
                 "name": "FOUNDRY_PROJECT_ENDPOINT",
-                "value": "[if(empty(parameters('aiProjectEndpoint')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectEndpoint.value, parameters('aiProjectEndpoint'))]"
+                "value": "[if(empty(parameters('aiProjectEndpoint')), reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectEndpoint.value, parameters('aiProjectEndpoint'))]"
               },
               {
                 "name": "AZURE_AI_MODEL_DEPLOYMENT_NAME",
-                "value": "[if(empty(parameters('aiModelDeploymentName')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.deploymentName.value, parameters('aiModelDeploymentName'))]"
+                "value": "[if(empty(parameters('aiModelDeploymentName')), reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.deploymentName.value, parameters('aiModelDeploymentName'))]"
               },
               {
                 "name": "AZURE_CLIENT_ID",
-                "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.clientId.value]"
+                "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.clientId.value]"
+              },
+              {
+                "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                "value": "[reference(resourceId('Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.appInsightsConnectionString.value]"
+              },
+              {
+                "name": "OTEL_SERVICE_NAME",
+                "value": "ariba-agent"
+              },
+              {
+                "name": "ENABLE_SENSITIVE_DATA",
+                "value": "true"
               }
             ]
           }
@@ -1416,19 +1345,18 @@
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'cae')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'registry')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'ca-ariba-mcp')]",
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'uami')]",
+        "[resourceId('Microsoft.Resources/deployments', 'cae')]",
+        "[resourceId('Microsoft.Resources/deployments', 'registry')]",
+        "[resourceId('Microsoft.Resources/deployments', 'foundry')]",
+        "[resourceId('Microsoft.Resources/deployments', 'ca-ariba-mcp')]",
+        "[resourceId('Microsoft.Resources/deployments', 'monitoring')]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "foundry-role-provisioned",
-      "resourceGroup": "[variables('rgName')]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -1436,10 +1364,10 @@
         "mode": "Incremental",
         "parameters": {
           "aiFoundryAccountName": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.accountName.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.accountName.value]"
           },
           "principalId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.principalId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.principalId.value]"
           }
         },
         "template": {
@@ -1449,7 +1377,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.43.8.12551",
-              "templateHash": "5048724283199763865"
+              "templateHash": "6241000910968240573"
             }
           },
           "parameters": {
@@ -1461,9 +1389,9 @@
             },
             "roleDefinitionId": {
               "type": "string",
-              "defaultValue": "64702f94-c441-49e6-a78b-ef80e0188fee",
+              "defaultValue": "53ca6127-db72-4b80-b1b0-d745d6d5456d",
               "metadata": {
-                "description": "Role definition ID. Default: Azure AI Developer (64702f94-c441-49e6-a78b-ef80e0188fee)."
+                "description": "Role definition ID. Default: Azure AI User (53ca6127-db72-4b80-b1b0-d745d6d5456d) — inclui data actions de agents/write necessárias para chamar Foundry OpenAI via projeto."
               }
             }
           },
@@ -1483,9 +1411,138 @@
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry')]",
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('rgName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'uami')]",
+        "[resourceId('Microsoft.Resources/deployments', 'foundry')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "foundry-role-cogservices",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "aiFoundryAccountName": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.accountName.value]"
+          },
+          "principalId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.principalId.value]"
+          },
+          "roleDefinitionId": {
+            "value": "a97b65f3-24c7-4388-baec-2e87135dc908"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.43.8.12551",
+              "templateHash": "6241000910968240573"
+            }
+          },
+          "parameters": {
+            "aiFoundryAccountName": {
+              "type": "string"
+            },
+            "principalId": {
+              "type": "string"
+            },
+            "roleDefinitionId": {
+              "type": "string",
+              "defaultValue": "53ca6127-db72-4b80-b1b0-d745d6d5456d",
+              "metadata": {
+                "description": "Role definition ID. Default: Azure AI User (53ca6127-db72-4b80-b1b0-d745d6d5456d) — inclui data actions de agents/write necessárias para chamar Foundry OpenAI via projeto."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[resourceId('Microsoft.CognitiveServices/accounts', parameters('aiFoundryAccountName'))]",
+              "name": "[guid(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiFoundryAccountName')), parameters('principalId'), parameters('roleDefinitionId'))]",
+              "properties": {
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', parameters('roleDefinitionId'))]",
+                "principalType": "ServicePrincipal",
+                "principalId": "[parameters('principalId')]"
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'uami')]",
+        "[resourceId('Microsoft.Resources/deployments', 'foundry')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "foundry-role-openai-user",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "aiFoundryAccountName": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.accountName.value]"
+          },
+          "principalId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.principalId.value]"
+          },
+          "roleDefinitionId": {
+            "value": "5e0bd9bd-7b93-4f28-af87-19fc36ad61bd"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.43.8.12551",
+              "templateHash": "6241000910968240573"
+            }
+          },
+          "parameters": {
+            "aiFoundryAccountName": {
+              "type": "string"
+            },
+            "principalId": {
+              "type": "string"
+            },
+            "roleDefinitionId": {
+              "type": "string",
+              "defaultValue": "53ca6127-db72-4b80-b1b0-d745d6d5456d",
+              "metadata": {
+                "description": "Role definition ID. Default: Azure AI User (53ca6127-db72-4b80-b1b0-d745d6d5456d) — inclui data actions de agents/write necessárias para chamar Foundry OpenAI via projeto."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[resourceId('Microsoft.CognitiveServices/accounts', parameters('aiFoundryAccountName'))]",
+              "name": "[guid(resourceId('Microsoft.CognitiveServices/accounts', parameters('aiFoundryAccountName')), parameters('principalId'), parameters('roleDefinitionId'))]",
+              "properties": {
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', parameters('roleDefinitionId'))]",
+                "principalType": "ServicePrincipal",
+                "principalId": "[parameters('principalId')]"
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'uami')]",
+        "[resourceId('Microsoft.Resources/deployments', 'foundry')]"
       ]
     },
     {
@@ -1504,7 +1561,7 @@
             "value": "[parameters('aiFoundryAccountName')]"
           },
           "principalId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.principalId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.principalId.value]"
           }
         },
         "template": {
@@ -1514,7 +1571,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.43.8.12551",
-              "templateHash": "5048724283199763865"
+              "templateHash": "6241000910968240573"
             }
           },
           "parameters": {
@@ -1526,9 +1583,9 @@
             },
             "roleDefinitionId": {
               "type": "string",
-              "defaultValue": "64702f94-c441-49e6-a78b-ef80e0188fee",
+              "defaultValue": "53ca6127-db72-4b80-b1b0-d745d6d5456d",
               "metadata": {
-                "description": "Role definition ID. Default: Azure AI Developer (64702f94-c441-49e6-a78b-ef80e0188fee)."
+                "description": "Role definition ID. Default: Azure AI User (53ca6127-db72-4b80-b1b0-d745d6d5456d) — inclui data actions de agents/write necessárias para chamar Foundry OpenAI via projeto."
               }
             }
           },
@@ -1548,7 +1605,7 @@
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami')]"
+        "[resourceId('Microsoft.Resources/deployments', 'uami')]"
       ]
     }
   ],
@@ -1563,7 +1620,7 @@
     },
     "AZURE_RESOURCE_GROUP": {
       "type": "string",
-      "value": "[variables('rgName')]"
+      "value": "[resourceGroup().name]"
     },
     "AZURE_SUBSCRIPTION_ID": {
       "type": "string",
@@ -1571,45 +1628,53 @@
     },
     "AZURE_USER_ASSIGNED_IDENTITY_ID": {
       "type": "string",
-      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.identityId.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.identityId.value]"
     },
     "AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID": {
       "type": "string",
-      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.clientId.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'uami'), '2025-04-01').outputs.clientId.value]"
     },
     "AZURE_CONTAINER_REGISTRY_ENDPOINT": {
       "type": "string",
-      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'registry'), '2025-04-01').outputs.loginServer.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'registry'), '2025-04-01').outputs.loginServer.value]"
+    },
+    "APPLICATIONINSIGHTS_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.appInsightsConnectionString.value]"
+    },
+    "APPLICATIONINSIGHTS_NAME": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'monitoring'), '2025-04-01').outputs.appInsightsName.value]"
     },
     "AZURE_AI_FOUNDRY_ACCOUNT_NAME": {
       "type": "string",
-      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.accountName.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.accountName.value]"
     },
     "AZURE_AI_FOUNDRY_PROJECT_NAME": {
       "type": "string",
-      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectName.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectName.value]"
     },
     "AZURE_AI_PROJECT_ENDPOINT": {
       "type": "string",
-      "value": "[if(empty(parameters('aiProjectEndpoint')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectEndpoint.value, parameters('aiProjectEndpoint'))]"
+      "value": "[if(empty(parameters('aiProjectEndpoint')), reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.projectEndpoint.value, parameters('aiProjectEndpoint'))]"
     },
     "AZURE_AI_MODEL_DEPLOYMENT_NAME": {
       "type": "string",
-      "value": "[if(empty(parameters('aiModelDeploymentName')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.deploymentName.value, parameters('aiModelDeploymentName'))]"
+      "value": "[if(empty(parameters('aiModelDeploymentName')), reference(resourceId('Microsoft.Resources/deployments', 'foundry'), '2025-04-01').outputs.deploymentName.value, parameters('aiModelDeploymentName'))]"
     },
     "ARIBA_MCP_ENDPOINT": {
       "type": "string",
-      "value": "[format('https://{0}', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'ca-ariba-mcp'), '2025-04-01').outputs.containerAppFqdn.value)]"
+      "value": "[format('https://{0}', reference(resourceId('Microsoft.Resources/deployments', 'ca-ariba-mcp'), '2025-04-01').outputs.containerAppFqdn.value)]"
     },
     "ARIBA_AGENT_ENDPOINT": {
       "type": "string",
-      "value": "[format('https://{0}', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'ca-ariba-agent'), '2025-04-01').outputs.containerAppFqdn.value)]"
+      "value": "[format('https://{0}', reference(resourceId('Microsoft.Resources/deployments', 'ca-ariba-agent'), '2025-04-01').outputs.containerAppFqdn.value)]"
     },
     "SERVICE_API_ENDPOINTS": {
       "type": "array",
       "value": [
-        "[format('https://{0}/', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'ca-ariba-mcp'), '2025-04-01').outputs.containerAppFqdn.value)]",
-        "[format('https://{0}/', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'ca-ariba-agent'), '2025-04-01').outputs.containerAppFqdn.value)]"
+        "[format('https://{0}/', reference(resourceId('Microsoft.Resources/deployments', 'ca-ariba-mcp'), '2025-04-01').outputs.containerAppFqdn.value)]",
+        "[format('https://{0}/', reference(resourceId('Microsoft.Resources/deployments', 'ca-ariba-agent'), '2025-04-01').outputs.containerAppFqdn.value)]"
       ]
     }
   }

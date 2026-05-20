@@ -22,6 +22,12 @@ param modelSkuName string = 'GlobalStandard'
 @description('Capacity (kTPM) do deployment.')
 param modelCapacity int = 10
 
+@description('Resource ID do Application Insights a conectar ao project (vazio = não cria connection).')
+param appInsightsId string = ''
+
+@description('Connection string do Application Insights (vazio = não cria connection).')
+param appInsightsConnectionString string = ''
+
 resource foundry 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
   name: foundryAccountName
   location: location
@@ -64,6 +70,27 @@ resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-
       format: 'OpenAI'
       name: modelName
       version: modelVersion
+    }
+  }
+}
+
+// ===== Application Insights connection =====
+// Vincula o App Insights ao Foundry project para que as abas "Tracing" e
+// "Monitoring" do portal ai.azure.com fiquem populadas.
+resource appInsightsConnection 'Microsoft.CognitiveServices/accounts/projects/connections@2025-04-01-preview' = if (!empty(appInsightsId) && !empty(appInsightsConnectionString)) {
+  parent: project
+  name: 'appinsights'
+  properties: {
+    category: 'AppInsights'
+    target: appInsightsId
+    authType: 'ApiKey'
+    isSharedToAll: true
+    credentials: {
+      key: appInsightsConnectionString
+    }
+    metadata: {
+      ApiType: 'Azure'
+      ResourceId: appInsightsId
     }
   }
 }

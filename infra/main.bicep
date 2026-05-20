@@ -63,7 +63,10 @@ param aribaClientSecret string = ''
 @description('SAP Ariba Realm (opcional, ignorado em modo mock).')
 param aribaRealm string = ''
 
-var uniqueSuffix = substring(uniqueString(resourceGroup().id, environmentName), 0, 5)
+// Token determinístico padrão azd. Não muda entre deploys do mesmo ambiente,
+// nem se o template for movido para outro RG / scope.
+var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
+var uniqueSuffix = substring(resourceToken, 0, 5)
 var tags = {
   'azd-env-name': environmentName
 }
@@ -132,6 +135,8 @@ module foundry './modules/foundry.bicep' = {
     modelDeploymentName: foundryModelName
     modelSkuName: foundryModelSkuName
     modelCapacity: foundryModelCapacity
+    appInsightsId: monitoring.outputs.appInsightsId
+    appInsightsConnectionString: monitoring.outputs.appInsightsConnectionString
   }
 }
 
@@ -160,6 +165,8 @@ module mcpApp './modules/containerapp.bicep' = {
       { name: 'ARIBA_CLIENT_ID', value: aribaClientId }
       { name: 'ARIBA_REALM', value: aribaRealm }
       { name: 'AZURE_CLIENT_ID', value: appIdentity.outputs.clientId }
+      { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: monitoring.outputs.appInsightsConnectionString }
+      { name: 'OTEL_SERVICE_NAME', value: 'ariba-mcp' }
     ], empty(aribaClientSecret) ? [] : [
       { name: 'ARIBA_CLIENT_SECRET', secretRef: 'ariba-client-secret' }
     ])
@@ -185,6 +192,9 @@ module agentApp './modules/containerapp.bicep' = {
       { name: 'FOUNDRY_PROJECT_ENDPOINT', value: effectiveProjectEndpoint }
       { name: 'AZURE_AI_MODEL_DEPLOYMENT_NAME', value: effectiveDeploymentName }
       { name: 'AZURE_CLIENT_ID', value: appIdentity.outputs.clientId }
+      { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: monitoring.outputs.appInsightsConnectionString }
+      { name: 'OTEL_SERVICE_NAME', value: 'ariba-agent' }
+      { name: 'ENABLE_SENSITIVE_DATA', value: 'true' }
     ]
   }
 }
@@ -240,6 +250,9 @@ output AZURE_USER_ASSIGNED_IDENTITY_ID string = appIdentity.outputs.identityId
 output AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID string = appIdentity.outputs.clientId
 
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerRegistry.outputs.loginServer
+
+output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.appInsightsConnectionString
+output APPLICATIONINSIGHTS_NAME string = monitoring.outputs.appInsightsName
 
 output AZURE_AI_FOUNDRY_ACCOUNT_NAME string = foundry.outputs.accountName
 output AZURE_AI_FOUNDRY_PROJECT_NAME string = foundry.outputs.projectName

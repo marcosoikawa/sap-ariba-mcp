@@ -5,30 +5,38 @@ echo "🔧 Configurando ambiente sap-ariba-mcp..."
 
 WORKSPACE_DIR="/workspaces/sap-ariba-mcp"
 
-# 1. Instalar dependências do root
-echo "📦 Instalando dependências do workspace..."
+# 1. Instalar dependências do root e de cada serviço
+echo "📦 Instalando dependências do workspace (root)..."
 cd "$WORKSPACE_DIR"
 python -m pip install --user -r requirements.txt
+
+echo "📦 Instalando dependências do Ariba-Agent..."
+python -m pip install --user -r "$WORKSPACE_DIR/Ariba-Agent/requirements.txt"
+
+echo "📦 Instalando dependências do Ariba-MCP..."
+python -m pip install --user -r "$WORKSPACE_DIR/Ariba-MCP/requirements.txt"
 
 # 3. Validar importações críticas
 echo "✅ Validando importações..."
 
-# Verificar agent_framework versão e disponibilidade
 python << 'EOF'
 import sys
 try:
     import agent_framework
     print(f"✅ agent_framework v{agent_framework.__version__ if hasattr(agent_framework, '__version__') else 'desconhecida'} instalado")
 
-    from agent_framework import Agent, MCPStreamableHTTPTool
-    print("✅ Agent disponível")
+    from agent_framework import ChatAgent, MCPStreamableHTTPTool
+    print("✅ ChatAgent disponível")
     print("✅ MCPStreamableHTTPTool disponível")
 
-    from agent_framework.foundry import FoundryChatClient
-    print("✅ FoundryChatClient disponível")
+    from agent_framework.azure import AzureAIAgentClient
+    print("✅ AzureAIAgentClient (Persistent Agents) disponível")
+
+    from azure.monitor.opentelemetry import configure_azure_monitor  # noqa: F401
+    print("✅ azure-monitor-opentelemetry disponível")
 
 except ImportError as e:
-    print(f"❌ Erro ao importar agent_framework: {e}")
+    print(f"❌ Erro ao importar dependências: {e}")
     sys.exit(1)
 EOF
 
