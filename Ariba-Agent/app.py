@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import os
+import queue
+import threading
+import uuid
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, render_template, request, session
+from flask import Flask, Response, jsonify, render_template, request, session
 
 load_dotenv()
 
@@ -49,7 +53,7 @@ else:
     )
 
 # Import depois do setup p/ garantir que o Agent Framework já vê a config OTel.
-from agent import run_query  # noqa: E402
+from agent import reset_session, run_query_stream  # noqa: E402
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET", "ariba-agent-dev-secret")
@@ -57,8 +61,36 @@ app.secret_key = os.getenv("FLASK_SECRET", "ariba-agent-dev-secret")
 
 @app.get("/")
 def index():
-    session.setdefault("thread_id", None)
+    session.setdefault("sid", uuid.uuid4().hex)
     return render_template("index.html")
+
+
+def _sse(message: str, sid: str):
+    """Bridge async generator -> sync iterator emitindo eventos SSE."""
+    q: queue.Queue = queue.Queue()
+    SENTINEL = object()
+
+    def runner():
+        async def consume():
+            async for chunk in run_query_stream(message, session_id=sid):
+                q.put(("chunk", chunk))
+
+        try:
+            asyncio.run(consume())
+        except Exception as exc:  # noqa: BLE001
+            q.put(("error", f"{type(exc).__name__}: {exc}"))
+        finally:
+            q.put(SENTINEL)
+
+    threading.Thread(target=runner, daemon=True).start()
+
+    while True:
+        item = q.get()
+        if item is SENTINEL:
+            yield "event: done\ndata: {}\n\n"
+            return
+        kind, payload = item
+        yield f"event: {kind}\ndata: {json.dumps({'text': payload})}\n\n"
 
 
 @app.post("/api/chat")
@@ -68,21 +100,20 @@ def chat():
     if not message:
         return jsonify({"error": "Empty message"}), 400
 
-    thread_id = session.get("thread_id")
-    try:
-        reply = asyncio.run(run_query(message, thread_id=thread_id))
-    except Exception as exc:  # noqa: BLE001
-        return jsonify({"error": f"{type(exc).__name__}: {exc}"}), 500
-
-    # Persiste o thread_id retornado para manter a conversa na mesma thread
-    # (aparece agrupada em "My threads" no Foundry).
-    session["thread_id"] = reply.thread_id
-    return jsonify({"reply": reply.text, "thread_id": reply.thread_id})
+    sid = session.setdefault("sid", uuid.uuid4().hex)
+    return Response(
+        _sse(message, sid),
+        mimetype="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @app.post("/api/reset")
 def reset():
-    session["thread_id"] = None
+    sid = session.get("sid")
+    if sid:
+        reset_session(sid)
+    session["sid"] = uuid.uuid4().hex
     return jsonify({"ok": True})
 
 

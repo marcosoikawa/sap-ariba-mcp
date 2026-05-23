@@ -25,12 +25,11 @@ try:
     import agent_framework
     print(f"✅ agent_framework v{agent_framework.__version__ if hasattr(agent_framework, '__version__') else 'desconhecida'} instalado")
 
-    from agent_framework import ChatAgent, MCPStreamableHTTPTool
-    print("✅ ChatAgent disponível")
+    from agent_framework import MCPStreamableHTTPTool
     print("✅ MCPStreamableHTTPTool disponível")
 
-    from agent_framework.foundry import AzureAIAgentClient
-    print("✅ AzureAIAgentClient (Persistent Agents) disponível")
+    from agent_framework.foundry import FoundryChatClient
+    print("✅ FoundryChatClient disponível")
 
     from azure.monitor.opentelemetry import configure_azure_monitor  # noqa: F401
     print("✅ azure-monitor-opentelemetry disponível")

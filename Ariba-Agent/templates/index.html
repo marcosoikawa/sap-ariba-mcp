@@ -498,14 +498,58 @@ f.addEventListener('submit', async (e) => {
       body: JSON.stringify({ message: text })
     });
 
-    const j = await r.json();
-    if (j.error) {
-      placeholder.innerHTML = `<div class="role">assistant</div><span class="err-txt">${j.error}</span>`;
-      log('Agent retornou erro: ' + j.error, 'error');
+    if (!r.ok || !r.body) {
+      const errTxt = `HTTP ${r.status}`;
+      placeholder.innerHTML = `<div class="role">assistant</div><span class="err-txt">${errTxt}</span>`;
+      log('Agent retornou erro: ' + errTxt, 'error');
     } else {
-      placeholder.innerHTML = `<div class="role">assistant</div>` + marked.parse(j.reply || '');
-      wrapTables(placeholder);
-      log('Agent respondeu com sucesso.', 'success');
+      const reader = r.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let full = '';
+      let gotError = null;
+
+      placeholder.innerHTML = `<div class="role">assistant</div><div class="stream"></div>`;
+      const streamEl = placeholder.querySelector('.stream');
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        // Processa frames SSE separados por blank line
+        let idx;
+        while ((idx = buffer.indexOf('\n\n')) !== -1) {
+          const frame = buffer.slice(0, idx);
+          buffer = buffer.slice(idx + 2);
+          let event = 'message', data = '';
+          for (const line of frame.split('\n')) {
+            if (line.startsWith('event:')) event = line.slice(6).trim();
+            else if (line.startsWith('data:')) data += line.slice(5).trim();
+          }
+          if (!data) continue;
+          let payload = {};
+          try { payload = JSON.parse(data); } catch { payload = { text: data }; }
+
+          if (event === 'chunk' && payload.text) {
+            full += payload.text;
+            streamEl.innerHTML = marked.parse(full);
+            wrapTables(placeholder);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          } else if (event === 'error') {
+            gotError = payload.text || 'erro';
+          } else if (event === 'done') {
+            break;
+          }
+        }
+      }
+
+      if (gotError) {
+        placeholder.innerHTML = `<div class="role">assistant</div><span class="err-txt">${gotError}</span>`;
+        log('Agent retornou erro: ' + gotError, 'error');
+      } else {
+        log('Agent respondeu com sucesso (stream).', 'success');
+      }
     }
   } catch (err) {
     const txt = String(err);
